@@ -11,8 +11,8 @@ public class BuscarClienteUseCase implements BuscarClienteInputPort {
         this.buscarClienteOutputPort = buscarClienteOutputPort;
     }
     @Override
-    public ClienteResponse BuscaCliente(String cpf) {
-       return this.buscarClienteOutputPort.buscar(cpf);
+    public ClienteResponse buscarCliente(String cpf) {
+        return this.buscarClienteOutputPort.buscar(cpf);
     }
 }
 

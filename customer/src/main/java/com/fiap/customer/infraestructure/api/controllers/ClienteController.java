@@ -15,12 +15,10 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
-
     private final SalvarClienteInputport salvarClienteInputport;
     private final EditarClienteInputport editarClienteInputport;
     private final BuscarClienteInputPort buscarClienteInputPort;
     private final DeletarClienteInputPort deletarClienteInputPort;
-
     public ClienteController(SalvarClienteInputport salvarClienteInputport, EditarClienteInputport editarClienteInputport, BuscarClienteInputPort buscarClienteInputPort, DeletarClienteInputPort deletarClienteInputPort) {
         this.salvarClienteInputport = salvarClienteInputport;
         this.editarClienteInputport = editarClienteInputport;
@@ -30,23 +28,23 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<Void> salvar(@Valid @RequestBody ClienteRequest clienteRequest, UriComponentsBuilder uriComponentsBuilder){
-        //todo validar a criacao do mesmo cliente;
+        // TODO validar a criacao do mesmo cliente;
         salvarClienteInputport.salvar(clienteRequest);
         return ResponseEntity.created(uriComponentsBuilder.path("/cliente/{cpf}").buildAndExpand(clienteRequest.getCpf()).toUri()).build();
-    };
+    }
 
     @PatchMapping
     public ResponseEntity<String> editar(@Valid @RequestBody ClienteRequest clienteRequest){
         editarClienteInputport.editar(clienteRequest);
         return ResponseEntity.ok("Cliente " + clienteRequest.getNome() + " atualizado com sucesso!");
-    };
+    }
 
    @GetMapping("/{cpf}")
 
     public ResponseEntity<ClienteResponse> buscar(@PathVariable String cpf){
-        var cliente = buscarClienteInputPort.BuscaCliente(cpf);
+        var cliente = buscarClienteInputPort.buscarCliente(cpf);
         return ResponseEntity.ok(cliente);
-    };
+    }
 
    @DeleteMapping("/{cpf}")
     public ResponseEntity<String> deletar(@PathVariable String cpf, UriComponentsBuilder uriComponentsBuilder){

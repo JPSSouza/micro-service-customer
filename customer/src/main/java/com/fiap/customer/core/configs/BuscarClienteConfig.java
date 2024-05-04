@@ -7,12 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BuscarClienteConfig {
-
     @Bean
     public BuscarClienteUseCase buscarClienteUseCase(BuscarClienteAdapter buscarClienteAdapter){
         return new BuscarClienteUseCase(buscarClienteAdapter);
-    };
-
+    }
 }
 
 
