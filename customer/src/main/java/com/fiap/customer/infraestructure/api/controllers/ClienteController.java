@@ -20,10 +20,12 @@ public class ClienteController {
     private final BuscarClienteInputPort buscarClienteInputPort;
     private final DeletarClienteInputPort deletarClienteInputPort;
     public ClienteController(SalvarClienteInputport salvarClienteInputport, EditarClienteInputport editarClienteInputport, BuscarClienteInputPort buscarClienteInputPort, DeletarClienteInputPort deletarClienteInputPort) {
+
         this.salvarClienteInputport = salvarClienteInputport;
         this.editarClienteInputport = editarClienteInputport;
         this.buscarClienteInputPort = buscarClienteInputPort;
         this.deletarClienteInputPort = deletarClienteInputPort;
+
     }
 
     @PostMapping
@@ -40,14 +42,13 @@ public class ClienteController {
     }
 
    @GetMapping("/{cpf}")
-
     public ResponseEntity<ClienteResponse> buscar(@PathVariable String cpf){
         var cliente = buscarClienteInputPort.buscarCliente(cpf);
         return ResponseEntity.ok(cliente);
     }
 
    @DeleteMapping("/{cpf}")
-    public ResponseEntity<String> deletar(@PathVariable String cpf, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<String> deletar(@PathVariable String cpf){
        deletarClienteInputPort.deletar(cpf);
        return ResponseEntity.noContent().build();
    }

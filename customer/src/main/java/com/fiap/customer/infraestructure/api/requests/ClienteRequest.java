@@ -1,11 +1,15 @@
 package com.fiap.customer.infraestructure.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Getter
+@Setter
 public class ClienteRequest {
 
     @NotBlank(message = "CPF não pode ser vazio!")
