@@ -1,4 +1,4 @@
-package com.fiap.customer.core.usecase.unitTests;
+package com.fiap.customer.core.usecase;
 
 import com.fiap.customer.core.ports.out.BuscarClienteOutputPort;
 import com.fiap.customer.core.usecase.BuscarClienteUseCase;
