@@ -2,7 +2,7 @@ package com.fiap.customer.core.usecase;
 
 import com.fiap.customer.core.domains.entities.ClienteDTO;
 import com.fiap.customer.core.ports.out.EditarClienteOutputPort;
-import com.fiap.customer.infraestructure.api.mappers.ClienteMapper;
+import com.fiap.customer.infraestructure.utils.mappers.ClienteMapper;
 import com.fiap.customer.infraestructure.api.requests.ClienteRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

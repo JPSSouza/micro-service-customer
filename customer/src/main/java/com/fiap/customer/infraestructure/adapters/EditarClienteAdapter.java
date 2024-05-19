@@ -6,9 +6,8 @@ import com.fiap.customer.core.domains.exception.ClienteNaoEncontradoException;
 import com.fiap.customer.core.domains.exception.ExceptionsMessageEnum;
 import com.fiap.customer.core.ports.out.EditarClienteOutputPort;
 import com.fiap.customer.infraestructure.persistence.entities.ClienteEntity;
-import com.fiap.customer.infraestructure.persistence.mappers.ClienteEntityMapper;
 import com.fiap.customer.infraestructure.persistence.repositorys.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fiap.customer.infraestructure.utils.mappers.ClienteMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -16,20 +15,22 @@ import java.util.Optional;
 @Component
 public class EditarClienteAdapter implements EditarClienteOutputPort {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    @Autowired
-    ClienteEntityMapper clienteMapper;
+    private final ClienteMapper clienteMapper;
+
+    public EditarClienteAdapter(ClienteRepository clienteRepository, ClienteMapper clienteMapper){
+        this.clienteRepository = clienteRepository;
+        this.clienteMapper = clienteMapper;
+    }
+
     @Override
     public void editar(ClienteDTO cliente) {
 
         Optional<ClienteEntity> clienteEntity = clienteRepository.findById(cliente.getCpf());
         if(clienteEntity.isPresent()){
 
-            clienteEntity.get().setCpf(cliente.getCpf());
-            clienteEntity.get().setNome(cliente.getNome());
-            clienteEntity.get().setEmail(cliente.getEmail());
+            clienteMapper.toClienteEntity(cliente);
 
             clienteRepository.save(clienteEntity.get());
         }else{

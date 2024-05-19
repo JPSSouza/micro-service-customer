@@ -1,8 +1,6 @@
 package com.fiap.customer.infraestructure.adapters;
 
 import com.fiap.customer.core.domains.exception.ClienteNaoEncontradoException;
-import com.fiap.customer.infraestructure.utils.mappers.ClienteMapper;
-import com.fiap.customer.infraestructure.api.responses.ClienteResponse;
 import com.fiap.customer.infraestructure.persistence.entities.ClienteEntity;
 import com.fiap.customer.infraestructure.persistence.repositorys.ClienteRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,51 +14,44 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
-class BuscarClienteAdapterTest {
+class DeletarClienteAdapterTest {
+
     AutoCloseable openMocks;
     @InjectMocks
-    BuscarClienteAdapter buscarClienteAdapter;
+    DeletarClienteAdapter deletarClienteAdapter;
     @Mock
     ClienteRepository clienteRepository;
-    @Mock
-    ClienteMapper clienteMapper;
-    @Mock
-    ClienteEntity entity;
-    @Mock
-    ClienteResponse clienteResponse;
-
     @BeforeEach
     void setUp() {
         openMocks = MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void deveTestarBuscarClienteAdapter(){
+    public void deveTestarDeletarClienteAdapter(){
 
         var cpf = "545.464.180-43";
+        ClienteEntity cliente = new ClienteEntity();
 
-        when(clienteRepository.findById(any(String.class))).thenReturn(Optional.of(entity));
-        when(clienteMapper.toClienteResponse(any(ClienteEntity.class))).thenReturn(clienteResponse);
+        when(clienteRepository.findById(cpf)).thenReturn(Optional.of(cliente));
 
-        var cliente = buscarClienteAdapter.buscar(cpf);
+        deletarClienteAdapter.deletar(cpf);
 
-        assertNotNull(cliente);
-        assertInstanceOf(ClienteResponse.class, cliente);
+        verify(clienteRepository,times(1)).findById(cpf);
+        verify(clienteRepository,times(1)).deleteById(cpf);
+
     }
 
     @Test
-    public void deveLancarExceptionClienteNaoEncontradoNoBuscarClienteAdapter(){
-
-        var cpf = "545.464.180-43";
+    public void deveLancarExceptionClienteNaoEncontradoaoDeletarClienteAdapter(){
 
         when(clienteRepository.findById(any(String.class))).thenReturn(Optional.empty());
 
-        ClienteNaoEncontradoException erro = assertThrows(ClienteNaoEncontradoException.class, ()-> buscarClienteAdapter.buscar(cpf));
+        ClienteNaoEncontradoException erro = assertThrows(ClienteNaoEncontradoException.class, ()-> deletarClienteAdapter.deletar(any(String.class)));
 
         assertNotNull(erro);
         assertTrue(erro.getMessage().contains("Cliente não encontrado!"));
-
     }
 }

@@ -3,7 +3,7 @@ package com.fiap.customer.infraestructure.adapters;
 import com.fiap.customer.core.domains.exception.ClienteNaoEncontradoException;
 import com.fiap.customer.core.domains.exception.ExceptionsMessageEnum;
 import com.fiap.customer.core.ports.out.BuscarClienteOutputPort;
-import com.fiap.customer.infraestructure.api.mappers.ClienteMapper;
+import com.fiap.customer.infraestructure.utils.mappers.ClienteMapper;
 import com.fiap.customer.infraestructure.api.responses.ClienteResponse;
 import com.fiap.customer.infraestructure.persistence.entities.ClienteEntity;
 import com.fiap.customer.infraestructure.persistence.repositorys.ClienteRepository;

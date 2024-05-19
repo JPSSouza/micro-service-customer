@@ -2,7 +2,7 @@ package com.fiap.customer.core.usecase;
 
 import com.fiap.customer.core.ports.in.EditarClienteInputport;
 import com.fiap.customer.core.ports.out.EditarClienteOutputPort;
-import com.fiap.customer.infraestructure.api.mappers.ClienteMapper;
+import com.fiap.customer.infraestructure.utils.mappers.ClienteMapper;
 import com.fiap.customer.infraestructure.api.requests.ClienteRequest;
 
 public class EditarClienteUseCase implements EditarClienteInputport {

@@ -2,7 +2,7 @@ package com.fiap.customer.core.usecase;
 
 import com.fiap.customer.core.ports.in.SalvarClienteInputport;
 import com.fiap.customer.core.ports.out.SalvarClienteOutputPort;
-import com.fiap.customer.infraestructure.api.mappers.ClienteMapper;
+import com.fiap.customer.infraestructure.utils.mappers.ClienteMapper;
 import com.fiap.customer.infraestructure.api.requests.ClienteRequest;
 
 public class SalvarClienteUseCase implements SalvarClienteInputport {

@@ -1,4 +1,4 @@
-package com.fiap.customer.infraestructure.api.mappers;
+package com.fiap.customer.infraestructure.utils.mappers;
 
 
 import com.fiap.customer.core.domains.entities.ClienteDTO;
@@ -12,4 +12,5 @@ import org.mapstruct.Mapper;
 public interface ClienteMapper {
     ClienteDTO toCliente(ClienteRequest clienteRequest);
     ClienteResponse toClienteResponse(ClienteEntity clienteEntity);
+    ClienteEntity toClienteEntity(ClienteDTO clienteDTO);
 }

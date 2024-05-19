@@ -23,13 +23,8 @@ class BuscarClienteUseCaseTest {
     AutoCloseable mock;
     @BeforeEach
     void setUp() {
-        mock = MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
-    @AfterEach
-    void tearDown() throws Exception {
-        mock.close();
-    }
-
     @Test
     public void deveTestarBuscarClienteUsecase(){
 
