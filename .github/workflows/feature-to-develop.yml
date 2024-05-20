@@ -1,13 +1,13 @@
 name: Open PR to Develop
 
 on:
-  create:
-    branches:
-      - 'feature/*'
   push:
     branches:
       - 'feature/*'
       
+permissions:
+  pull-requests: write
+
 jobs:
   create-pr:
     runs-on: ubuntu-latest
