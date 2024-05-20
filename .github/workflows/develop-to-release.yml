@@ -30,10 +30,13 @@ jobs:
           if [ -z "$LATEST_TAG" ]; then
             NEXT_VERSION="0.1.0"
           else
-            VERSION_PARTS=(${LATEST_TAG//./ })
-            MAJOR=${VERSION_PARTS[0]}
-            MINOR=${VERSION_PARTS[1]}
-            PATCH=${VERSION_PARTS[2]}
+            # Parse version from tag name
+            VERSION=$(echo "$LATEST_TAG" | sed 's/^v//')
+            # Increment patch version
+            IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+            MAJOR="${VERSION_PARTS[0]}"
+            MINOR="${VERSION_PARTS[1]}"
+            PATCH="${VERSION_PARTS[2]}"
             NEXT_PATCH=$((PATCH + 1))
             NEXT_VERSION="$MAJOR.$MINOR.$NEXT_PATCH"
           fi
