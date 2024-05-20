@@ -49,7 +49,7 @@ jobs:
 
       - name: Create PR to main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTION_PERSONAL }}
         run: |
           PR_TITLE="Release ${{ env.NEXT_VERSION }}"
           PR_BODY="This PR releases version ${{ env.NEXT_VERSION }} to main"
