@@ -1,0 +1,26 @@
+name: Open PR to Develop
+
+on:
+  create:
+    branches:
+      - 'feature/*'
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install GitHub CLI
+        run: sudo apt-get install -y gh
+
+      - name: Create PR to develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME=${{ github.ref#refs/heads/ }}
+          PR_TITLE="Merge $BRANCH_NAME to develop"
+          PR_BODY="This PR merges the $BRANCH_NAME branch to develop"
+          gh pr create --title "$PR_TITLE" --body "$PR_BODY" --head "$BRANCH_NAME" --base develop
