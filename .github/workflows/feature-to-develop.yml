@@ -4,14 +4,13 @@ on:
   push:
     branches:
       - 'feature/*'
-      
+
 permissions:
   pull-requests: write
 
 jobs:
   create-pr:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
