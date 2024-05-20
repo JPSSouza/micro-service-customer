@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Atualizado para usar Node.js 20
 
       - name: Install GitHub CLI
         run: sudo apt-get install -y gh
@@ -24,6 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
           PR_TITLE="Merge ${{ env.BRANCH_NAME }} to develop"
           PR_BODY="This PR merges the ${{ env.BRANCH_NAME }} branch to develop"
           gh pr create --title "$PR_TITLE" --body "$PR_BODY" --head "${{ env.BRANCH_NAME }}" --base develop
