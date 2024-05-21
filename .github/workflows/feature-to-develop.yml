@@ -12,6 +12,19 @@ jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
+      - name: Compilar e Testar
+        run: |
+          ./gradlew build
+
+      - name: Set execute permissions for gradlew
+        run: chmod +x ./gradlew
+        
+      - name: Verificação de Cobertura Jacoco
+        run: |
+          ./gradlew jacocoTestReport
+          coverage=$(grep -E 'total.*?([0-9]{1,3}\.[0-9])%' build/reports/jacoco/test/html/index.html | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
+          echo "Cobertura de teste: $coverage%"
+          
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -43,6 +56,9 @@ jobs:
         run: |
           ./gradlew build
 
+      - name: Set execute permissions for gradlew
+        run: chmod +x ./gradlew
+        
       - name: Verificação de Cobertura Jacoco
         run: |
           ./gradlew jacocoTestReport
