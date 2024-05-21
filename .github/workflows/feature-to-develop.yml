@@ -30,3 +30,4 @@ jobs:
           PR_TITLE="Merge $BRANCH_NAME to develop"
           PR_BODY="This PR merges the $BRANCH_NAME branch to develop"
           gh pr create --title "$PR_TITLE" --body "$PR_BODY" --head "$BRANCH_NAME" --base develop
+          
