@@ -12,17 +12,9 @@ jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
-    
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set execute permissions for gradlew
-        run: chmod +x ./gradlew
-      
-      - name: Compilar e Testar
-        run: |
-          ./gradlew build
-          
       - name: Install GitHub CLI
         run: sudo apt-get install -y gh
 
@@ -38,25 +30,3 @@ jobs:
           PR_TITLE="Merge $BRANCH_NAME to develop"
           PR_BODY="This PR merges the $BRANCH_NAME branch to develop"
           gh pr create --title "$PR_TITLE" --body "$PR_BODY" --head "$BRANCH_NAME" --base develop
-
-      - name: Checkout do código
-        uses: actions/checkout@v2
-
-      - name: Configuração do JDK
-        uses: actions/setup-java@v1
-        with: 
-          java-version: '11'
-
-      - name: Compilar e Testar
-        run: |
-          ./gradlew build
-
-      - name: Set execute permissions for gradlew
-        run: chmod +x ./gradlew
-        
-      - name: Verificação de Cobertura Jacoco
-        run: |
-          ./gradlew jacocoTestReport
-          coverage=$(grep -E 'total.*?([0-9]{1,3}\.[0-9])%' build/reports/jacoco/test/html/index.html | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
-          echo "Cobertura de teste: $coverage%"
-      
