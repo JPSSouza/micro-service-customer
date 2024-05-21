@@ -36,8 +36,8 @@ jobs:
 
       - name: Configuração do JDK
         uses: actions/setup-java@v1
-        with:
-        java-version: '11'
+        with: 
+          java-version: '11'
 
       - name: Compilar e Testar
         run: |
