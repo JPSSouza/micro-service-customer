@@ -20,6 +20,12 @@ jobs:
           distribution: 'temurin' # ou outro, como 'zulu', 'adopt'
           java-version: '17' # Versão do Java compatível com sua aplicação
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+
+      - name: Gradle permission
+        run: chmod +x gradlew
+
       # Step 3: Build the application with Gradle
       - name: Build with Gradle
         run: ./gradlew clean build
