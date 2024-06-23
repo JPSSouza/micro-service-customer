@@ -59,6 +59,51 @@ jobs:
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
 
+      - name: Check if Deployment exists
+        id: check-deployment
+        run: |
+          kubectl get deployment ${{ secrets.K8S_DEPLOYMENT_NAME }} --namespace ${{ secrets.K8S_NAMESPACE }} || echo "NOT_FOUND"
+
+      # Step 12: Create Deployment if not exists
+      - name: Create Deployment if not exists
+        if: steps.check-deployment.outputs.stdout == 'NOT_FOUND'
+        run: |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: ${{ secrets.K8S_DEPLOYMENT_NAME }}
+            namespace: ${{ secrets.K8S_NAMESPACE }}
+            labels:
+              app: ${{ secrets.K8S_DEPLOYMENT_NAME }}
+          spec:
+            replicas: 2
+            selector:
+              matchLabels:
+                app: ${{ secrets.K8S_DEPLOYMENT_NAME }}
+            template:
+              metadata:
+                labels:
+                  app: ${{ secrets.K8S_DEPLOYMENT_NAME }}
+              spec:
+                containers:
+                - name: ${{ secrets.K8S_CONTAINER_NAME }}
+                  image: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
+                  ports:
+                  - containerPort: 8989
+                  readinessProbe:
+                    httpGet:
+                      path: /actuator/health
+                      port: 8989
+                    initialDelaySeconds: 5
+                    periodSeconds: 10
+                  livenessProbe:
+                    httpGet:
+                      path: /actuator/health
+                      port: 8080
+                    initialDelaySeconds: 15
+                    periodSeconds: 20
+          EOF
       # Step 9: Deploy to EKS
       - name: Deploy to EKS
         run: |
