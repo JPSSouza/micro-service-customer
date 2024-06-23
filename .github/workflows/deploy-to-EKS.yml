@@ -1,9 +1,8 @@
 name: Deploy to EKS
 
 on:
-  pull_request:
-    branches:
-      - develop
+  push:
+    branches: [ "develop" ]
 
 jobs:
   build-and-deploy:
