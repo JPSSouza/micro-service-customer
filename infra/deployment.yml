@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-ms
+  namespace: customer-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-ms
+  template:
+    metadata:
+      labels:
+        app: customer-ms
+    spec:
+      containers:
+        - name: customer-ms
+          image: "${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}"
+          ports:
+            - containerPort: 8989
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 180
+            periodSeconds: 20
