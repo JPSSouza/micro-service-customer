@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-customer
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ms-customer
+  template:
+    metadata:
+      labels:
+        app: ms-customer
+    spec:
+      containers:
+      - name: ms-customer
+        image: ms-customer:0.0.1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-customer-service
+spec:
+  selector:
+    app: ms-customer-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
