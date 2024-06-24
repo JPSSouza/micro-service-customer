@@ -61,15 +61,15 @@ jobs:
 
       - name: Create namespace
         run: |
-          kubectl apply -f namespace.yaml
+          kubectl apply -f namespace-customer.yml
 
       - name: Deploy application
         run: |
-          kubectl apply -f deployment.yaml -n customer-namespace
+          kubectl apply -f deployment.yml -n customer-namespace
 
       - name: Create service
         run: |
-          kubectl apply -f service.yaml -n customer-namespace
+          kubectl apply -f service.yml -n customer-namespace
 
       - name: Wait for rollout to finish
         run: |
