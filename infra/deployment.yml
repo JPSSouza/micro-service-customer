@@ -15,18 +15,18 @@ spec:
     spec:
       containers:
         - name: customer-ms
-          image: "${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}"
+          image: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
           ports:
             - containerPort: 8989
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 30
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 180
-            periodSeconds: 20
+          #readinessProbe:
+           # httpGet:
+            #  path: /actuator/health
+             # port: 8080
+            #initialDelaySeconds: 30
+            #periodSeconds: 10
+          #livenessProbe:
+           # httpGet:
+            #  path: /actuator/health
+             # port: 8080
+            #initialDelaySeconds: 180
+            #periodSeconds: 20
