@@ -63,9 +63,17 @@ jobs:
         run: |
           kubectl apply -f infra/namespace-customer.yml
 
+      - name: Substitute variables in deployment.yml
+        run: |
+          envsubst < infra/deployment.yml > infra/deployment_substituted.yml
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          GITHUB_SHA: ${{ github.sha }}
+
       - name: Deploy application
         run: |
-          kubectl apply -f infra/deployment.yml -n customer-namespace
+          kubectl apply -f infra/deployment_substituted.yml -n customer-namespace
 
       - name: Create service
         run: |
