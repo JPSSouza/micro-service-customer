@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: postgres
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: cliente
+            - name: POSTGRES_PASSWORD
+              value: JoaoGuilherme2601
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres
+          name: meu-postgres
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+            - mountPath: /docker-entrypoint-initdb.d/postgres.sql
+              name: postgres-cm1
+              subPath: postgres.sql
+      restartPolicy: Always
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data
+        - configMap:
+            items:
+              - key: postgres.sql
+                path: postgres.sql
+            name: postgres-cm1
+          name: postgres-cm1
