@@ -18,15 +18,10 @@ spec:
           image: $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
           ports:
             - containerPort: 8989
-          #readinessProbe:
-           # httpGet:
-            #  path: /actuator/health
-             # port: 8080
-            #initialDelaySeconds: 30
-            #periodSeconds: 10
-          #livenessProbe:
-           # httpGet:
-            #  path: /actuator/health
-             # port: 8080
-            #initialDelaySeconds: 180
-            #periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m       # Solicita 100 milicores de CPU
+              memory: 256Mi   # Solicita 256 Mebibytes de memória
+            limits:
+              cpu: 200m       # Limita a 200 milicores de CPU
+              memory: 512Mi   # Limita a 512 Mebibytes de memória
