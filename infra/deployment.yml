@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: customer-ms
-          image: $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
+          image: $ECR_REGISTRY/$ECR_REPOSITORY:latest
           ports:
             - containerPort: 8989
           resources:
