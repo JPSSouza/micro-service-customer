@@ -1,4 +1,13 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-cm1
+  namespace: customer-namespace
+  labels:
+    app: postgres
+    io.kompose.service: postgres
+  annotations:
+    use-subpath: "true"
 data:
   postgres.sql: |-
     -- Adminer 4.8.1 PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) dump
@@ -10,10 +19,3 @@ data:
         CONSTRAINT "cliente_cpf" PRIMARY KEY ("cpf")
     ) WITH (oids = false);
 
-kind: ConfigMap
-metadata:
-  annotations:
-    use-subpath: "true"
-  labels:
-    io.kompose.service: postgres
-  name: postgres-cm1
