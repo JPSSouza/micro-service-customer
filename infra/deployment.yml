@@ -18,18 +18,6 @@ spec:
           image: $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
           ports:
             - containerPort: 8989
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8989
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            readinessProbe:
-              httpGet:
-                path: /readyz
-                port: 8989
-              initialDelaySeconds: 10
-              periodSeconds: 5
           resources:
             requests:
               cpu: 100m       # Solicita 100 milicores de CPU
@@ -37,3 +25,15 @@ spec:
             limits:
               cpu: 200m       # Limita a 200 milicores de CPU
               memory: 512Mi   # Limita a 512 Mebibytes de memória
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8989
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8989
+            initialDelaySeconds: 10
+            periodSeconds: 5
