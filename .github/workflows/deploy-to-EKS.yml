@@ -45,7 +45,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       # Step 6: Build Docker image
-      - name: Build Docker image
+      - name: Build Docker image customer
         run: |
           docker build -t ${{ secrets.ECR_REPOSITORY }}:latest .
 
@@ -70,22 +70,6 @@ jobs:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           GITHUB_SHA: ${{ github.sha }}
-
-      - name: Deploy application postgres data persistent
-        run: |
-          kubectl apply -f infra/postgres-data-persistentvolumeclaim.yml -n customer-namespace
-
-      - name: Deploy application postgres configMap
-        run: |
-          kubectl apply -f infra/postgres-cm1-configmap.yml -n customer-namespace
-
-      - name: Deploy application postgres service
-        run: |
-          kubectl apply -f infra/postgres-service.yml -n customer-namespace
-
-      - name: Deploy application postgres
-        run: |
-          kubectl apply -f infra/postgres-deployment.yml -n customer-namespace
 
       - name: Deploy application customer
         run: |
