@@ -21,10 +21,10 @@ spec:
           resources:
             requests:
               cpu: 500m       # Solicita 100 milicores de CPU
-              memory: 1Gi   # Solicita 256 Mebibytes de memória
+              memory: 256Mi   # Solicita 256 Mebibytes de memória
             limits:
               cpu: 1000m       # Limita a 200 milicores de CPU
-              memory: 2Gi   # Limita a 512 Mebibytes de memória
+              memory: 512Mi   # Limita a 512 Mebibytes de memória
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
