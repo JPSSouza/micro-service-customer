@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
     private final SalvarClienteInputport salvarClienteInputport;
     private final EditarClienteInputport editarClienteInputport;
