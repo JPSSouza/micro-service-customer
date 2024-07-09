@@ -27,13 +27,13 @@ spec:
               memory: 512Mi   # Limita a 512 Mebibytes de memória
           livenessProbe:
             httpGet:
-              path: /healthz
+              path: /actuator/health/liveness
               port: 8989
             initialDelaySeconds: 15
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /readyz
+              path: /actuator/health/readiness
               port: 8989
             initialDelaySeconds: 10
             periodSeconds: 5
