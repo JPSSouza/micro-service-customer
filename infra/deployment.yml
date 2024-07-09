@@ -29,11 +29,11 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: 8989
-            initialDelaySeconds: 15
+            initialDelaySeconds: 40
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8989
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
             periodSeconds: 5
