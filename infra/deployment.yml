@@ -17,7 +17,7 @@ spec:
         - name: customer-ms
           image: $ECR_REGISTRY/$ECR_REPOSITORY:latest
           ports:
-            - containerPort: 8989
+            - containerPort: 8080
           resources:
             requests:
               cpu: 100m       # Solicita 100 milicores de CPU
@@ -28,14 +28,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8989
+              port: 8080
             initialDelaySeconds: 40
             periodSeconds: 15
             timeoutSeconds: 10
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8989
+              port: 8080
             initialDelaySeconds: 30
             periodSeconds: 15
             timeoutSeconds: 10
