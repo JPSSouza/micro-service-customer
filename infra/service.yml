@@ -3,10 +3,18 @@ kind: Service
 metadata:
   name: customer-service
   namespace: customer-namespace
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/actuator/health/readiness"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "30"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "5"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "2"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "2"
 spec:
   selector:
     app: customer-ms
   ports:
-    - port: 8989
+    - port: 80
       targetPort: 8989
   type: LoadBalancer
