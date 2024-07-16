@@ -61,7 +61,7 @@ class ClienteControllerTest {
 
         doNothing().when(salvarClienteInputport).salvar(any(ClienteRequest.class));
 
-        mockMvc.perform(post("/cliente")
+        mockMvc.perform(post("/clientes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(clienteRequest)))
                 .andExpect(status().isCreated());
@@ -75,7 +75,7 @@ class ClienteControllerTest {
 
         doNothing().when(editarClienteInputport).editar(any(ClienteRequest.class));
 
-        mockMvc.perform(patch("/cliente")
+        mockMvc.perform(patch("/clientes")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(asJsonString(clienteRequest)))
                     .andExpect(status().isOk());
@@ -89,7 +89,7 @@ class ClienteControllerTest {
         String cpf = "476.724.180-41";
         when(buscarClienteInputPort.buscarCliente(any(String.class))).thenReturn(clienteResponse);
 
-        mockMvc.perform(get("/cliente/{cpf}", cpf))
+        mockMvc.perform(get("/clientes/{cpf}", cpf))
                     .andExpect(status().isOk());
 
         verify(buscarClienteInputPort, times(1)).buscarCliente(any(String.class));
@@ -102,7 +102,7 @@ class ClienteControllerTest {
         String cpf = "476.724.180-41";
         doNothing().when(deletarClienteInputPort).deletar(cpf);
 
-        mockMvc.perform(delete("/cliente/{cpf}", cpf))
+        mockMvc.perform(delete("/clientes/{cpf}", cpf))
                     .andExpect(status().isNoContent());
 
         verify(deletarClienteInputPort, times(1)).deletar(cpf);
